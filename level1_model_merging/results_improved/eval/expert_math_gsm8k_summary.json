@@ -1,0 +1,8 @@
+{
+  "model": "expert_math",
+  "benchmark": "gsm8k",
+  "num_examples": 100,
+  "accuracy": 0.77,
+  "correct": 77,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_improved\\eval\\expert_math_gsm8k.jsonl"
+}

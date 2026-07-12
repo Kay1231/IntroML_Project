@@ -1,0 +1,11 @@
+models:
+- model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+- model: Qwen/Qwen2.5-Math-1.5B-Instruct
+merge_method: slerp
+base_model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+parameters:
+  t: 0.8
+dtype: bfloat16
+tokenizer:
+  source: union
+chat_template: auto

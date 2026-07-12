@@ -1,0 +1,70 @@
+project_name: qwen25_1p5b_code_math_merge
+
+base_model: Qwen/Qwen2.5-1.5B-Instruct
+
+expert_models:
+  code: Qwen/Qwen2.5-Coder-1.5B-Instruct
+  math: Qwen/Qwen2.5-Math-1.5B-Instruct
+
+merge_dtype: bfloat16
+
+paths:
+  merge_config_dir: generated_merge_configs
+  merge_output_dir: merged_models
+  results_dir: results
+  hf_cache_dir: ../hf_cache
+
+methods:
+  - name: slerp_code070_math030
+    merge_method: slerp
+    description: 70% Code expert, 30% Math expert.
+    parameters:
+      t: 0.30
+
+  - name: slerp_code050_math050
+    merge_method: slerp
+    description: Balanced SLERP merge.
+    parameters:
+      t: 0.50
+
+  - name: slerp_code030_math070
+    merge_method: slerp
+    description: 30% Code expert, 70% Math expert.
+    parameters:
+      t: 0.70
+
+  - name: task_code050_math050
+    merge_method: task_arithmetic
+    description: Balanced task-vector merge against the base model.
+    weights:
+      code: 0.50
+      math: 0.50
+    parameters:
+      lambda: 1.0
+
+  - name: ties_code050_math050_d050
+    merge_method: ties
+    description: Balanced TIES merge with density 0.5.
+    weights:
+      code: 0.50
+      math: 0.50
+    parameters:
+      density: 0.50
+      normalize: true
+      int8_mask: true
+
+eval:
+  generation:
+    torch_dtype: auto
+    device_map: auto
+    max_new_tokens_math: 256
+    max_new_tokens_code: 256
+  math:
+    dataset_name: openai/gsm8k
+    dataset_config: main
+    split: test
+    limit: 100
+  code:
+    dataset_name: openai/openai_humaneval
+    split: test
+    limit: 50

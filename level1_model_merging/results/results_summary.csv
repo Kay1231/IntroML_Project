@@ -1,0 +1,17 @@
+model,benchmark,metric,score,num_examples,details_path
+base,gsm8k,accuracy,0.640000,100,D:\IntroML\project\level1_model_merging\results\eval\base_gsm8k.jsonl
+base,humaneval,syntax_rate,1.000000,50,D:\IntroML\project\level1_model_merging\results\eval\base_humaneval.jsonl
+expert_code,gsm8k,accuracy,0.330000,100,D:\IntroML\project\level1_model_merging\results\eval\expert_code_gsm8k.jsonl
+expert_code,humaneval,syntax_rate,1.000000,50,D:\IntroML\project\level1_model_merging\results\eval\expert_code_humaneval.jsonl
+expert_math,gsm8k,accuracy,0.320000,100,D:\IntroML\project\level1_model_merging\results\eval\expert_math_gsm8k.jsonl
+expert_math,humaneval,syntax_rate,0.000000,50,D:\IntroML\project\level1_model_merging\results\eval\expert_math_humaneval.jsonl
+slerp_code030_math070,gsm8k,accuracy,0.200000,100,D:\IntroML\project\level1_model_merging\results\eval\slerp_code030_math070_gsm8k.jsonl
+slerp_code030_math070,humaneval,syntax_rate,0.180000,50,D:\IntroML\project\level1_model_merging\results\eval\slerp_code030_math070_humaneval.jsonl
+slerp_code050_math050,gsm8k,accuracy,0.020000,100,D:\IntroML\project\level1_model_merging\results\eval\slerp_code050_math050_gsm8k.jsonl
+slerp_code050_math050,humaneval,syntax_rate,0.120000,50,D:\IntroML\project\level1_model_merging\results\eval\slerp_code050_math050_humaneval.jsonl
+slerp_code070_math030,gsm8k,accuracy,0.000000,100,D:\IntroML\project\level1_model_merging\results\eval\slerp_code070_math030_gsm8k.jsonl
+slerp_code070_math030,humaneval,syntax_rate,0.100000,50,D:\IntroML\project\level1_model_merging\results\eval\slerp_code070_math030_humaneval.jsonl
+task_code050_math050,gsm8k,accuracy,0.000000,100,D:\IntroML\project\level1_model_merging\results\eval\task_code050_math050_gsm8k.jsonl
+task_code050_math050,humaneval,syntax_rate,0.120000,50,D:\IntroML\project\level1_model_merging\results\eval\task_code050_math050_humaneval.jsonl
+ties_code050_math050_d050,gsm8k,accuracy,0.000000,100,D:\IntroML\project\level1_model_merging\results\eval\ties_code050_math050_d050_gsm8k.jsonl
+ties_code050_math050_d050,humaneval,syntax_rate,0.000000,50,D:\IntroML\project\level1_model_merging\results\eval\ties_code050_math050_d050_humaneval.jsonl

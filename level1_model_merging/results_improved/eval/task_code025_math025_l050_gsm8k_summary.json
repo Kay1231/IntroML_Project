@@ -1,0 +1,8 @@
+{
+  "model": "task_code025_math025_l050",
+  "benchmark": "gsm8k",
+  "num_examples": 100,
+  "accuracy": 0.01,
+  "correct": 1,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_improved\\eval\\task_code025_math025_l050_gsm8k.jsonl"
+}

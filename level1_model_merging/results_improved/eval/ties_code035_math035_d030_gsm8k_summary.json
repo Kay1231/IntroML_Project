@@ -1,0 +1,8 @@
+{
+  "model": "ties_code035_math035_d030",
+  "benchmark": "gsm8k",
+  "num_examples": 100,
+  "accuracy": 0.03,
+  "correct": 3,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_improved\\eval\\ties_code035_math035_d030_gsm8k.jsonl"
+}

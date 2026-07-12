@@ -1,0 +1,11 @@
+{
+  "model": "task_code035_math035_l060",
+  "benchmark": "humaneval",
+  "num_examples": 50,
+  "syntax_rate": 0.52,
+  "syntax_ok": 26,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_improved\\eval\\task_code035_math035_l060_humaneval.jsonl",
+  "allow_code_execution": true,
+  "pass_at_1": 0.0,
+  "passed": 0
+}

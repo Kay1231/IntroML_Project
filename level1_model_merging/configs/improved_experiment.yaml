@@ -1,0 +1,92 @@
+project_name: qwen25_1p5b_code_math_merge_improved
+
+# Use the non-instruction-tuned base as the real reference model.
+# The two experts are instruction/code/math tuned descendants from the Qwen2.5 family.
+base_model: Qwen/Qwen2.5-1.5B
+
+expert_models:
+  code: Qwen/Qwen2.5-Coder-1.5B-Instruct
+  math: Qwen/Qwen2.5-Math-1.5B-Instruct
+
+merge_dtype: bfloat16
+
+paths:
+  merge_config_dir: generated_merge_configs_improved
+  merge_output_dir: merged_models_improved
+  results_dir: results_improved
+  hf_cache_dir: ../hf_cache
+
+methods:
+  - name: slerp_code020_math080
+    merge_method: slerp
+    description: SLERP biased toward the math expert while retaining some code behavior.
+    parameters:
+      t: 0.80
+
+  - name: slerp_code035_math065
+    merge_method: slerp
+    description: SLERP midpoint biased toward math for GSM8K retention.
+    parameters:
+      t: 0.65
+
+  - name: slerp_code050_math050
+    merge_method: slerp
+    description: Balanced expert-to-expert SLERP.
+    parameters:
+      t: 0.50
+
+  - name: task_code025_math025_l050
+    merge_method: task_arithmetic
+    description: Conservative task-vector merge against the true base model.
+    weights:
+      code: 0.25
+      math: 0.25
+    parameters:
+      lambda: 0.50
+
+  - name: task_code035_math035_l060
+    merge_method: task_arithmetic
+    description: Slightly stronger balanced task-vector merge.
+    weights:
+      code: 0.35
+      math: 0.35
+    parameters:
+      lambda: 0.60
+
+  - name: ties_code025_math025_d020
+    merge_method: ties
+    description: Sparse low-density TIES merge to reduce cross-task interference.
+    weights:
+      code: 0.25
+      math: 0.25
+    parameters:
+      density: 0.20
+      normalize: true
+      int8_mask: true
+
+  - name: ties_code035_math035_d030
+    merge_method: ties
+    description: Medium-density TIES merge for a stronger merged candidate.
+    weights:
+      code: 0.35
+      math: 0.35
+    parameters:
+      density: 0.30
+      normalize: true
+      int8_mask: true
+
+eval:
+  generation:
+    torch_dtype: auto
+    device_map: auto
+    max_new_tokens_math: 768
+    max_new_tokens_code: 512
+  math:
+    dataset_name: openai/gsm8k
+    dataset_config: main
+    split: test
+    limit: 100
+  code:
+    dataset_name: openai/openai_humaneval
+    split: test
+    limit: 50

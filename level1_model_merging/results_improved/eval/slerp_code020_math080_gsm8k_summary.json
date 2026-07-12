@@ -1,0 +1,8 @@
+{
+  "model": "slerp_code020_math080",
+  "benchmark": "gsm8k",
+  "num_examples": 100,
+  "accuracy": 0.21,
+  "correct": 21,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_improved\\eval\\slerp_code020_math080_gsm8k.jsonl"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "slerp_code070_math030",
+  "benchmark": "humaneval",
+  "num_examples": 50,
+  "syntax_rate": 0.1,
+  "syntax_ok": 5,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results\\eval\\slerp_code070_math030_humaneval.jsonl",
+  "allow_code_execution": false
+}

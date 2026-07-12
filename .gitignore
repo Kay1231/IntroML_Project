@@ -1,0 +1,15 @@
+hf_cache/
+level1_model_merging/merged_models/
+level1_model_merging/merged_models_improved/
+level1_model_merging/run_logs/
+
+level1_model_merging/results/eval/*.jsonl
+level1_model_merging/results_improved/eval/*.jsonl
+
+__pycache__/
+*.pyc
+.cache/
+*.safetensors
+*.bin
+*.pt
+*.pth

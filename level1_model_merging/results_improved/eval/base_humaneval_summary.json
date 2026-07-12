@@ -1,0 +1,11 @@
+{
+  "model": "base",
+  "benchmark": "humaneval",
+  "num_examples": 50,
+  "syntax_rate": 0.06,
+  "syntax_ok": 3,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_improved\\eval\\base_humaneval.jsonl",
+  "allow_code_execution": true,
+  "pass_at_1": 0.0,
+  "passed": 0
+}

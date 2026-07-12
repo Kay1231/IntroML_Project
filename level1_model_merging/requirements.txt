@@ -1,0 +1,14 @@
+accelerate>=0.30.0
+datasets>=2.20.0
+evaluate>=0.4.2
+huggingface_hub>=0.24.0
+matplotlib>=3.8.0
+numpy>=1.26.0
+pandas>=2.2.0
+protobuf>=4.25.0
+pyyaml>=6.0.1
+safetensors>=0.4.3
+sentencepiece>=0.2.0
+tqdm>=4.66.0
+transformers>=4.45.0
+mergekit @ git+https://github.com/arcee-ai/mergekit.git

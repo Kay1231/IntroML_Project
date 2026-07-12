@@ -1,0 +1,9 @@
+{
+  "model": "ties_code050_math050_d050",
+  "benchmark": "humaneval",
+  "num_examples": 50,
+  "syntax_rate": 0.0,
+  "syntax_ok": 0,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results\\eval\\ties_code050_math050_d050_humaneval.jsonl",
+  "allow_code_execution": false
+}
