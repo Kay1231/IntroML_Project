@@ -1,0 +1,8 @@
+{
+  "model": "ties_v2_code080_math020_d080",
+  "benchmark": "gsm8k",
+  "num_examples": 100,
+  "accuracy": 0.51,
+  "correct": 51,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_trained_lora_v2\\eval\\ties_v2_code080_math020_d080_gsm8k.jsonl"
+}

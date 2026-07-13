@@ -63,7 +63,11 @@ if (-not $SkipAdapterMerges) {
     Write-Host "Running v2 PEFT adapter merges..."
     $AdapterMerges = @(
         @{ Name = "lora_svd_v2_code080_math020"; Combination = "svd"; Code = "0.80"; Math = "0.20"; Rank = "16"; Density = "" },
-        @{ Name = "lora_ties_svd_v2_code080_math020"; Combination = "ties_svd"; Code = "0.80"; Math = "0.20"; Rank = "16"; Density = "0.80" }
+        @{ Name = "lora_svd_v2_code050_math050"; Combination = "svd"; Code = "0.50"; Math = "0.50"; Rank = "16"; Density = "" },
+        @{ Name = "lora_svd_v2_code020_math080"; Combination = "svd"; Code = "0.20"; Math = "0.80"; Rank = "16"; Density = "" },
+        @{ Name = "lora_ties_svd_v2_code080_math020"; Combination = "ties_svd"; Code = "0.80"; Math = "0.20"; Rank = "16"; Density = "0.80" },
+        @{ Name = "lora_ties_svd_v2_code050_math050"; Combination = "ties_svd"; Code = "0.50"; Math = "0.50"; Rank = "16"; Density = "0.80" },
+        @{ Name = "lora_ties_svd_v2_code020_math080"; Combination = "ties_svd"; Code = "0.20"; Math = "0.80"; Rank = "16"; Density = "0.80" }
     )
     foreach ($Merge in $AdapterMerges) {
         $AdapterArgs = @(
@@ -100,10 +104,6 @@ $EvalArgs = @(
     "--benchmark", "gsm8k",
     "--benchmark", "humaneval"
 )
-
-$AdapterMergeDir = Join-Path $ProjectRoot "merged_models_trained_lora_v2"
-$EvalArgs += @("--model", "lora_svd_v2_code080_math020=$(Join-Path $AdapterMergeDir 'lora_svd_v2_code080_math020')")
-$EvalArgs += @("--model", "lora_ties_svd_v2_code080_math020=$(Join-Path $AdapterMergeDir 'lora_ties_svd_v2_code080_math020')")
 
 if (-not $SkipCodeExecution) {
     $EvalArgs += "--allow-code-execution"

@@ -1,8 +1,0 @@
-{
-  "model": "expert_math",
-  "benchmark": "gsm8k",
-  "num_examples": 100,
-  "accuracy": 0.72,
-  "correct": 72,
-  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_lora\\eval\\expert_math_gsm8k.jsonl"
-}

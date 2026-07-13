@@ -69,6 +69,18 @@ methods:
     parameters:
       t: 0.20
 
+  - name: slerp_v2_code050_math050
+    merge_method: slerp
+    description: Balanced SLERP to test whether the stronger math LoRA also improves code retention.
+    parameters:
+      t: 0.50
+
+  - name: slerp_v2_code020_math080
+    merge_method: slerp
+    description: Math-heavy SLERP to probe the best overall trade-off after the math LoRA became strong on both tasks.
+    parameters:
+      t: 0.80
+
   - name: task_v2_code080_math020_l100
     merge_method: task_arithmetic
     description: Code-heavy Task Arithmetic candidate for non-SLERP comparison.
@@ -78,6 +90,62 @@ methods:
     parameters:
       lambda: 1.00
       normalize: false
+
+  - name: task_v2_code050_math050_l100
+    merge_method: task_arithmetic
+    description: Balanced Task Arithmetic candidate for non-SLERP weight-ratio analysis.
+    weights:
+      code: 0.50
+      math: 0.50
+    parameters:
+      lambda: 1.00
+      normalize: false
+
+  - name: task_v2_code020_math080_l100
+    merge_method: task_arithmetic
+    description: Math-heavy Task Arithmetic candidate for non-SLERP weight-ratio analysis.
+    weights:
+      code: 0.20
+      math: 0.80
+    parameters:
+      lambda: 1.00
+      normalize: false
+
+  - name: ties_v2_code080_math020_d080
+    merge_method: ties
+    description: Code-heavy full-weight TIES candidate.
+    weights:
+      code: 0.80
+      math: 0.20
+    parameters:
+      density: 0.80
+      lambda: 1.00
+      normalize: true
+      int8_mask: true
+
+  - name: ties_v2_code050_math050_d080
+    merge_method: ties
+    description: Balanced full-weight TIES candidate.
+    weights:
+      code: 0.50
+      math: 0.50
+    parameters:
+      density: 0.80
+      lambda: 1.00
+      normalize: true
+      int8_mask: true
+
+  - name: ties_v2_code020_math080_d080
+    merge_method: ties
+    description: Math-heavy full-weight TIES candidate.
+    weights:
+      code: 0.20
+      math: 0.80
+    parameters:
+      density: 0.80
+      lambda: 1.00
+      normalize: true
+      int8_mask: true
 
 adapter_merges:
   - name: lora_svd_v2_code080_math020
@@ -90,6 +158,32 @@ adapter_merges:
     combination_type: ties_svd
     code_weight: 0.80
     math_weight: 0.20
+    svd_rank: 16
+    density: 0.80
+
+  - name: lora_svd_v2_code050_math050
+    combination_type: svd
+    code_weight: 0.50
+    math_weight: 0.50
+    svd_rank: 16
+
+  - name: lora_svd_v2_code020_math080
+    combination_type: svd
+    code_weight: 0.20
+    math_weight: 0.80
+    svd_rank: 16
+
+  - name: lora_ties_svd_v2_code050_math050
+    combination_type: ties_svd
+    code_weight: 0.50
+    math_weight: 0.50
+    svd_rank: 16
+    density: 0.80
+
+  - name: lora_ties_svd_v2_code020_math080
+    combination_type: ties_svd
+    code_weight: 0.20
+    math_weight: 0.80
     svd_rank: 16
     density: 0.80
 

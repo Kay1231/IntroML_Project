@@ -445,7 +445,7 @@ def collect_model_specs(config: ProjectConfig, args: argparse.Namespace) -> list
         specs.append(ModelSpec("expert_code", config.expert_models["code"]))
         specs.append(ModelSpec("expert_math", config.expert_models["math"]))
     if args.include_merges:
-        for method in config.methods:
+        for method in [*config.methods, *config.adapter_merges]:
             name = str(method["name"])
             path = config.merged_model_dir(name)
             if path.exists():

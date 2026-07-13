@@ -1,0 +1,8 @@
+{
+  "model": "lora_svd_v2_code020_math080",
+  "benchmark": "gsm8k",
+  "num_examples": 100,
+  "accuracy": 0.52,
+  "correct": 52,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_trained_lora_v2\\eval\\lora_svd_v2_code020_math080_gsm8k.jsonl"
+}

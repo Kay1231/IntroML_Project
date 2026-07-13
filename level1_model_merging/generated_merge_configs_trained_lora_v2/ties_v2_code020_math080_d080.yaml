@@ -1,0 +1,19 @@
+models:
+- model: trained_lora_experts_v2/code_qwen25_1p5b_mbpp_body_lr5e5
+  parameters:
+    weight: 0.2
+    density: 0.8
+- model: trained_lora_experts_v2/math_qwen25_1p5b_gsm8k_evalprompt_lr5e5
+  parameters:
+    weight: 0.8
+    density: 0.8
+merge_method: ties
+base_model: Qwen/Qwen2.5-1.5B
+parameters:
+  lambda: 1.0
+  normalize: true
+  int8_mask: true
+dtype: bfloat16
+tokenizer:
+  source: union
+chat_template: auto

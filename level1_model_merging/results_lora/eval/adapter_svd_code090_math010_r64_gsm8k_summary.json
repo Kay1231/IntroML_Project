@@ -1,8 +1,0 @@
-{
-  "model": "adapter_svd_code090_math010_r64",
-  "benchmark": "gsm8k",
-  "num_examples": 30,
-  "accuracy": 0.1,
-  "correct": 3,
-  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_lora\\eval\\adapter_svd_code090_math010_r64_gsm8k.jsonl"
-}

@@ -1,8 +1,0 @@
-{
-  "model": "adapter_cat_code050_math050",
-  "benchmark": "gsm8k",
-  "num_examples": 100,
-  "accuracy": 0.61,
-  "correct": 61,
-  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_lora\\eval\\adapter_cat_code050_math050_gsm8k.jsonl"
-}

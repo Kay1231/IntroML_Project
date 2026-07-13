@@ -1,0 +1,11 @@
+models:
+- model: trained_lora_experts_v2/code_qwen25_1p5b_mbpp_body_lr5e5
+- model: trained_lora_experts_v2/math_qwen25_1p5b_gsm8k_evalprompt_lr5e5
+merge_method: slerp
+base_model: trained_lora_experts_v2/code_qwen25_1p5b_mbpp_body_lr5e5
+parameters:
+  t: 0.8
+dtype: bfloat16
+tokenizer:
+  source: union
+chat_template: auto

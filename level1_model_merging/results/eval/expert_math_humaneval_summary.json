@@ -1,9 +1,0 @@
-{
-  "model": "expert_math",
-  "benchmark": "humaneval",
-  "num_examples": 50,
-  "syntax_rate": 0.0,
-  "syntax_ok": 0,
-  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results\\eval\\expert_math_humaneval.jsonl",
-  "allow_code_execution": false
-}
