@@ -1,0 +1,14 @@
+[
+  {
+    "config": "vitB_r16_ties_subset",
+    "dataset": "mnist",
+    "accuracy": 56.989999999999995,
+    "normalized_accuracy": 57.39174219536757
+  },
+  {
+    "config": "vitB_r16_ties_subset",
+    "dataset": "subset_average",
+    "accuracy": 56.989999999999995,
+    "normalized_accuracy": 57.39174219536757
+  }
+]

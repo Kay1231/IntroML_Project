@@ -49,3 +49,15 @@ level2_knots/results/eval/*.jsonl
 # Level 2 logs / runs if generated later
 level2_knots/runs/
 level2_knots/run_logs/
+
+# Level 2 official downloaded data
+level2_knots_official/data/
+
+# Level 2 official run logs
+level2_knots_official/results_subset/*.log
+
+# Future generated artifacts
+level2_knots_official/checkpoints/
+level2_knots_official/outputs/
+level2_knots_official/runs/
+level2_knots_official/wandb/

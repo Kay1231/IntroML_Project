@@ -1,0 +1,3 @@
+config,dataset,accuracy,normalized_accuracy
+vitB_r16_knots_ties_subset,mnist,69.1,69.58710976837865
+vitB_r16_knots_ties_subset,subset_average,69.1,69.58710976837865

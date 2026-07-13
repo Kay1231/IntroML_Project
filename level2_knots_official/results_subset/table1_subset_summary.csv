@@ -1,0 +1,3 @@
+method,config,dataset,accuracy,normalized_accuracy,notes
+KnOTS-TIES,vitB_r16_knots_ties_subset,mnist,69.10,69.587,"Official KnOTS repo, 8 ViT-B/32 LoRA experts merged; evaluated on MNIST only because SVHN/GTSRB official download hosts were blocked by local socket permission."
+TIES,vitB_r16_ties_subset,mnist,56.99,57.392,"Official KnOTS repo baseline TIES, same 8 LoRA experts and MNIST evaluation."

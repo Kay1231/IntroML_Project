@@ -360,9 +360,9 @@ Level 2 选择复现论文 **Model merging with SVD to tie the KnOTS**（ICLR 20
 1. 跑通论文官方开源代码。
 2. 根据论文公式自己实现核心合并逻辑，并在至少一个数据集上复现论文报告的性能。
 
-由于 KnOTS 官方实验主要面向更大的 ViT/Llama3-8B 等设置，完整复现论文原始表格对本机 RTX 4060 Laptop 8GB 显存不友好。因此本项目采用第二种路线：根据论文核心公式实现 KnOTS 的 SVD 对齐合并逻辑，并复用 Level 1 中已经训练好的 Qwen2.5-1.5B LoRA v2 专家进行验证。
+由于 KnOTS 官方实验主要面向更大的 ViT/Llama3-8B 等设置，完整复现论文原始表格对本机 RTX 4060 Laptop 8GB 显存和本地数据下载环境不友好。因此本项目以第二种路线为主：根据论文核心公式实现 KnOTS 的 SVD 对齐合并逻辑，并复用 Level 1 中已经训练好的 Qwen2.5-1.5B LoRA v2 专家进行验证。同时，本项目额外跑通了 KnOTS 官方仓库的 Table 1 MNIST 子集，用作开源代码复现补充证据。
 
-需要说明的是：本实验没有逐项复现论文原始 benchmark 表格中的绝对数值，而是在本课程项目的 GSM8K 和 HumanEval 设置下复现论文报告的核心性能现象：经过 SVD 对齐后的合并模型能在至少一个数据集上达到或超过直接合并 baseline，并缓解任务干扰。该结论符合课程描述中“根据论文公式自己实现核心合并逻辑”的复现路径。
+需要说明的是：本实验没有逐项复现论文原始 benchmark 表格中的全部绝对数值，而是在本课程项目的 GSM8K 和 HumanEval 设置下复现论文报告的核心性能现象：经过 SVD 对齐后的合并模型能在至少一个数据集上达到或超过直接合并 baseline，并缓解任务干扰。额外官方子集实验也在 MNIST 上复现了 KnOTS-TIES 优于 TIES 的趋势。该结论符合课程描述中“根据论文公式自己实现核心合并逻辑”的复现路径。
 
 ### 8.3 实验设置
 
@@ -454,9 +454,10 @@ D:\IntroML\project\level2_knots\results\results_summary.csv
 - 已完成：根据 KnOTS 论文公式实现核心合并逻辑。
 - 已完成：在至少一个数据集上复现论文报告的核心性能现象。具体而言，KnOTS-TIES 在 HumanEval 上达到 0.44，高于 Level 1 直接 LoRA TIES-SVD 的 0.36；KnOTS-TA 在 GSM8K 上达到 0.62，高于 Level 1 Task Arithmetic 的 0.60。
 - 已完成：在两个数据集上均验证合并模型显著强于 base。
-- 未完成：没有完整跑通论文官方仓库中的原始大规模实验，也没有逐项复现论文原表格的绝对数值。
+- 已补充：跑通了 KnOTS 官方仓库的 Table 1 MNIST 子集，并将官方 Table 1 的 MNIST 列与本地结果进行对比。
+- 未完成：没有完整跑通论文官方仓库中的 8 数据集 Table 1，也没有逐项复现论文原表格的全部绝对数值。
 
-因此，最终表述应为：本项目完成的是 **KnOTS 核心算法的适配复现**，而不是论文官方实验表格的逐项复刻。考虑到课程允许“根据论文公式自己实现核心合并逻辑”，并且本实验已在 GSM8K/HumanEval 上得到与论文主张一致的性能收益，可以认为 Level 2 目标已经完成。
+因此，最终表述应为：本项目完成的是 **KnOTS 核心算法的适配复现 + 官方代码 MNIST 子集补充复现**，而不是论文官方实验表格的逐项复刻。考虑到课程允许“根据论文公式自己实现核心合并逻辑”，并且本实验已在 GSM8K/HumanEval 以及官方 MNIST 子集上得到与论文主张一致的性能收益，可以认为 Level 2 目标已经完成。
 
 ### 8.8 Level 2 分析
 
@@ -470,6 +471,61 @@ KnOTS-TA 和 KnOTS-TIES 的侧重点略有不同：
 | KnOTS-TIES | HumanEval 最高，达到 0.44；冲突缓解更明显 | 需要 density 超参数，GSM8K 略低于 KnOTS-TA |
 
 综合来看，KnOTS-TIES 是 Level 2 最值得展示的模型，因为它在保持数学能力的同时明显提高了代码能力；KnOTS-TA 则证明 SVD 对齐本身也能增强 Task Arithmetic。
+
+### 8.9 官方 Table 1 子集补充实验
+
+为补充“跑通开源代码”的证据，本项目额外在 `D:\IntroML\project\level2_knots_official` 克隆并适配了 KnOTS 官方仓库，使用官方 ViT-B/32 CLIP + 8 个 rank-16 LoRA 专家设置，尝试复现论文 Table 1 的小数据集子集。
+
+论文 Table 1 报告的是 8 个视觉数据集上的 **normalized accuracy**。归一化方式为：
+
+```text
+normalized accuracy = merged model accuracy / single-task fine-tuned accuracy * 100
+```
+
+其中 MNIST 的 single-task fine-tuned reference accuracy 为 99.3。下表是论文 Table 1 中 ViT-B/32 rank-16 LoRA 设置下的官方 normalized accuracy：
+
+| Method | Cars | DTD | EuroSAT | GTSRB | MNIST | RESISC45 | SUN397 | SVHN | Avg |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| RegMean | 80.2 | 71.3 | 37.9 | 47.3 | 43.1 | 70.5 | 93.9 | 43.0 | 60.9 |
+| Task Arithmetic | 82.0 | 73.6 | 48.8 | 42.1 | 53.1 | 71.5 | 97.5 | 41.2 | 63.7 |
+| TIES | 82.2 | 72.8 | 50.0 | 36.8 | 56.8 | 69.4 | 96.9 | 44.6 | 63.7 |
+| DARE-TIES | 81.4 | 74.5 | 50.8 | 39.2 | 55.0 | 70.7 | 97.6 | 40.1 | 63.7 |
+| KnOTS-TIES | 82.7 | 73.7 | 49.3 | 48.9 | 68.9 | 70.9 | 95.5 | 53.8 | 68.0 |
+| KnOTS-DARE-TIES | 81.8 | 75.9 | 50.7 | 40.3 | 53.2 | 70.2 | 97.9 | 41.0 | 63.9 |
+
+本地完成的官方子集为 MNIST。原计划同时跑 SVHN 和 GTSRB，但这两个数据集的官方下载源在当前 Windows 环境中被套接字权限拦截：
+
+```text
+以一种访问权限不允许的方式做了一个访问套接字的尝试
+```
+
+因此，本次额外官方子集结果只报告 MNIST。SVHN/GTSRB 的配置和脚本已保留，若之后手动下载数据到 `D:\IntroML\project\level2_knots_official\data`，可以继续复现。
+
+适配中完成的关键修复：
+
+- 将 `openai/clip-vit-base-patch32` 指向本地 HuggingFace cache snapshot，并将 `model.safetensors` 以硬链接放入 snapshot，避免反复联网查询 safetensors conversion。
+- 修复新版 PEFT 下 state_dict key 变化导致的写回问题，包括 `.base_model.model.` 和 `.base_layer.weight` 映射。
+- 将官方代码中的交互式 `pdb.set_trace()` 错误路径改为明确的 `RuntimeError`。
+- 为 `eval_scripts/8vision_pertask_subset.py` 增加 `--datasets` 过滤参数，便于只跑小数据集子集。
+
+本地 MNIST 子集结果与官方 Table 1 的 MNIST 列对比如下：
+
+| Method | 官方 Table 1 MNIST normalized accuracy | 本地 MNIST accuracy | 本地 MNIST normalized accuracy | 差值（本地 - 官方） |
+|---|---:|---:|---:|---:|
+| TIES | 56.8 | 56.99 | 57.392 | +0.592 |
+| KnOTS-TIES | 68.9 | 69.10 | 69.587 | +0.687 |
+
+结果文件：
+
+```text
+D:\IntroML\project\level2_knots_official\results_subset\vitB_r16_knots_ties_subset_mnist_results.csv
+D:\IntroML\project\level2_knots_official\results_subset\vitB_r16_ties_subset_mnist_results.csv
+D:\IntroML\project\level2_knots_official\results_subset\table1_subset_summary.csv
+```
+
+该补充实验说明，在官方 ViT-B/32 8 专家合并设置下，本地 MNIST 子集复现结果与论文 Table 1 的 MNIST 列非常接近，并且同样呈现 KnOTS-TIES 明显优于普通 TIES 的趋势：本地结果为 69.587 vs 57.392，官方结果为 68.9 vs 56.8。这与论文主张一致：先用 SVD 对 task update 进行对齐，再执行 TIES，可以比直接在原参数空间执行 TIES 更好地缓解任务冲突。
+
+需要明确的是：这不是完整复现 Table 1 的 8 数据集平均结果，而是官方开源代码的 MNIST 子集复现；完整 Table 1 仍需要补齐全部官方视觉数据集及更稳定的数据下载环境。
 
 ## 9. 可复现实验流程
 
