@@ -1,0 +1,103 @@
+project_name: qwen25_1p5b_self_trained_lora_merge
+
+base_model: Qwen/Qwen2.5-1.5B
+
+expert_models:
+  code: trained_lora_experts/code_qwen25_1p5b_python
+  math: trained_lora_experts/math_qwen25_1p5b_gsm8k
+
+lora_adapters:
+  code: trained_lora_adapters/code_qwen25_1p5b_python
+  math: trained_lora_adapters/math_qwen25_1p5b_gsm8k
+
+merge_dtype: bfloat16
+
+paths:
+  merge_config_dir: generated_merge_configs_trained_lora
+  merge_output_dir: merged_models_trained_lora
+  results_dir: results_trained_lora
+  hf_cache_dir: ../hf_cache
+
+train:
+  common:
+    torch_dtype: bfloat16
+    max_seq_length: 512
+    per_device_train_batch_size: 1
+    gradient_accumulation_steps: 8
+    learning_rate: 0.0002
+    num_train_epochs: 1
+    max_steps: 0
+    warmup_ratio: 0.03
+    logging_steps: 10
+    save_steps: 200
+    save_total_limit: 2
+    seed: 42
+    gradient_checkpointing: true
+    lora_r: 16
+    lora_alpha: 32
+    lora_dropout: 0.05
+    target_modules:
+      - q_proj
+      - k_proj
+      - v_proj
+      - o_proj
+      - gate_proj
+      - up_proj
+      - down_proj
+
+  tasks:
+    math:
+      dataset_name: openai/gsm8k
+      dataset_config: main
+      split: train
+      max_samples: 3000
+
+    code:
+      dataset_name: iamtarun/python_code_instructions_18k_alpaca
+      split: train
+      max_samples: 5000
+
+methods:
+  - name: slerp_trained_code050_math050
+    merge_method: slerp
+    description: Balanced SLERP between self-trained code/math LoRA experts materialized as full models.
+    parameters:
+      t: 0.50
+
+  - name: task_trained_code050_math050_l100
+    merge_method: task_arithmetic
+    description: Task Arithmetic between self-trained same-base LoRA experts.
+    weights:
+      code: 0.50
+      math: 0.50
+    parameters:
+      lambda: 1.00
+      normalize: false
+
+  - name: ties_trained_code050_math050_d050
+    merge_method: ties
+    description: TIES between self-trained same-base LoRA experts.
+    weights:
+      code: 0.50
+      math: 0.50
+    parameters:
+      density: 0.50
+      lambda: 1.00
+      normalize: true
+      int8_mask: true
+
+eval:
+  generation:
+    torch_dtype: auto
+    device_map: auto
+    max_new_tokens_math: 768
+    max_new_tokens_code: 512
+  math:
+    dataset_name: openai/gsm8k
+    dataset_config: main
+    split: test
+    limit: 100
+  code:
+    dataset_name: openai/openai_humaneval
+    split: test
+    limit: 50

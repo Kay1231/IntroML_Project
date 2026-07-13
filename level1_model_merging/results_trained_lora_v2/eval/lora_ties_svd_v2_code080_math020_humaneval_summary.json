@@ -1,0 +1,11 @@
+{
+  "model": "lora_ties_svd_v2_code080_math020",
+  "benchmark": "humaneval",
+  "num_examples": 50,
+  "syntax_rate": 0.3,
+  "syntax_ok": 15,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_trained_lora_v2\\eval\\lora_ties_svd_v2_code080_math020_humaneval.jsonl",
+  "allow_code_execution": true,
+  "pass_at_1": 0.14,
+  "passed": 7
+}

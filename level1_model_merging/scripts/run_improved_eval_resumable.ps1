@@ -28,18 +28,20 @@ $Models = @(
     @{ Alias = "base"; Ref = "Qwen/Qwen2.5-1.5B" },
     @{ Alias = "expert_code"; Ref = "Qwen/Qwen2.5-Coder-1.5B-Instruct" },
     @{ Alias = "expert_math"; Ref = "Qwen/Qwen2.5-Math-1.5B-Instruct" },
-    @{ Alias = "slerp_code020_math080"; Ref = (Join-Path $ProjectRoot "merged_models_improved\slerp_code020_math080") },
-    @{ Alias = "slerp_code035_math065"; Ref = (Join-Path $ProjectRoot "merged_models_improved\slerp_code035_math065") },
-    @{ Alias = "slerp_code050_math050"; Ref = (Join-Path $ProjectRoot "merged_models_improved\slerp_code050_math050") },
-    @{ Alias = "task_code025_math025_l050"; Ref = (Join-Path $ProjectRoot "merged_models_improved\task_code025_math025_l050") },
-    @{ Alias = "task_code035_math035_l060"; Ref = (Join-Path $ProjectRoot "merged_models_improved\task_code035_math035_l060") },
-    @{ Alias = "ties_code025_math025_d020"; Ref = (Join-Path $ProjectRoot "merged_models_improved\ties_code025_math025_d020") },
-    @{ Alias = "ties_code035_math035_d030"; Ref = (Join-Path $ProjectRoot "merged_models_improved\ties_code035_math035_d030") }
+    @{ Alias = "slerp_code090_math010"; Ref = (Join-Path $ProjectRoot "merged_models_improved\slerp_code090_math010") },
+    @{ Alias = "slerp_code080_math020"; Ref = (Join-Path $ProjectRoot "merged_models_improved\slerp_code080_math020") },
+    @{ Alias = "slerp_code070_math030"; Ref = (Join-Path $ProjectRoot "merged_models_improved\slerp_code070_math030") },
+    @{ Alias = "slerp_code020_math080"; Ref = (Join-Path $ProjectRoot "merged_models_improved\slerp_code020_math080") }
 )
 
 $Benchmarks = @("gsm8k", "humaneval")
 
 foreach ($Model in $Models) {
+    if ($Model.Ref -like "$ProjectRoot*" -and -not (Test-Path -LiteralPath $Model.Ref)) {
+        Write-Host "Skip $($Model.Alias): merged model directory does not exist."
+        continue
+    }
+
     foreach ($Benchmark in $Benchmarks) {
         $Alias = $Model.Alias
         $SummaryPath = Join-Path $EvalDir "$($Alias)_$($Benchmark)_summary.json"

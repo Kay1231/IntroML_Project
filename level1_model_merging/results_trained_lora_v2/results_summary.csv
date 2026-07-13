@@ -1,0 +1,15 @@
+model,benchmark,metric,score,num_examples,details_path
+base,gsm8k,accuracy,0.030000,100,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\base_gsm8k.jsonl
+base,humaneval,pass_at_1,0.000000,50,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\base_humaneval.jsonl
+expert_code,gsm8k,accuracy,0.160000,100,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\expert_code_gsm8k.jsonl
+expert_code,humaneval,pass_at_1,0.260000,50,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\expert_code_humaneval.jsonl
+expert_math,gsm8k,accuracy,0.610000,100,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\expert_math_gsm8k.jsonl
+expert_math,humaneval,pass_at_1,0.340000,50,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\expert_math_humaneval.jsonl
+lora_svd_v2_code080_math020,gsm8k,accuracy,0.480000,100,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\lora_svd_v2_code080_math020_gsm8k.jsonl
+lora_svd_v2_code080_math020,humaneval,pass_at_1,0.040000,50,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\lora_svd_v2_code080_math020_humaneval.jsonl
+lora_ties_svd_v2_code080_math020,gsm8k,accuracy,0.420000,100,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\lora_ties_svd_v2_code080_math020_gsm8k.jsonl
+lora_ties_svd_v2_code080_math020,humaneval,pass_at_1,0.140000,50,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\lora_ties_svd_v2_code080_math020_humaneval.jsonl
+slerp_v2_code080_math020,gsm8k,accuracy,0.410000,100,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\slerp_v2_code080_math020_gsm8k.jsonl
+slerp_v2_code080_math020,humaneval,pass_at_1,0.320000,50,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\slerp_v2_code080_math020_humaneval.jsonl
+task_v2_code080_math020_l100,gsm8k,accuracy,0.400000,100,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\task_v2_code080_math020_l100_gsm8k.jsonl
+task_v2_code080_math020_l100,humaneval,pass_at_1,0.280000,50,D:\IntroML\project\level1_model_merging\results_trained_lora_v2\eval\task_v2_code080_math020_l100_humaneval.jsonl

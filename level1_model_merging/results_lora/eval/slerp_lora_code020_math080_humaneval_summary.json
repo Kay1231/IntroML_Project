@@ -1,0 +1,11 @@
+{
+  "model": "slerp_lora_code020_math080",
+  "benchmark": "humaneval",
+  "num_examples": 20,
+  "syntax_rate": 1.0,
+  "syntax_ok": 20,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_lora\\eval\\slerp_lora_code020_math080_humaneval.jsonl",
+  "allow_code_execution": true,
+  "pass_at_1": 0.35,
+  "passed": 7
+}

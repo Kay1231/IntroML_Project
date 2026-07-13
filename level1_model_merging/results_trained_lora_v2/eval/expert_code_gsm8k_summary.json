@@ -1,0 +1,8 @@
+{
+  "model": "expert_code",
+  "benchmark": "gsm8k",
+  "num_examples": 100,
+  "accuracy": 0.16,
+  "correct": 16,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_trained_lora_v2\\eval\\expert_code_gsm8k.jsonl"
+}

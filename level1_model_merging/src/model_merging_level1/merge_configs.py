@@ -64,11 +64,44 @@ def _task_or_ties_config(config: ProjectConfig, method: dict[str, Any]) -> dict[
     }
 
 
+def _linear_config(config: ProjectConfig, method: dict[str, Any]) -> dict[str, Any]:
+    weights = dict(method.get("weights", {}))
+    parameters = dict(method.get("parameters", {}))
+
+    code_weight = float(weights.get("code", 0.5))
+    math_weight = float(weights.get("math", 0.5))
+
+    return {
+        "models": [
+            _weighted_model_block(config.expert_models["code"], code_weight),
+            _weighted_model_block(config.expert_models["math"], math_weight),
+        ],
+        "merge_method": "linear",
+        "parameters": {
+            "normalize": bool(parameters.get("normalize", True)),
+        },
+        "dtype": config.merge_dtype,
+        "tokenizer": _tokenizer_block(),
+        "chat_template": "auto",
+    }
+
+
 def render_merge_config(config: ProjectConfig, method: dict[str, Any]) -> dict[str, Any]:
     merge_method = str(method["merge_method"])
     if merge_method == "slerp":
         return _slerp_config(config, method)
-    if merge_method in {"task_arithmetic", "ties"}:
+    if merge_method == "linear":
+        return _linear_config(config, method)
+    if merge_method in {
+        "task_arithmetic",
+        "ties",
+        "dare_ties",
+        "dare_linear",
+        "breadcrumbs",
+        "breadcrumbs_ties",
+        "della",
+        "della_linear",
+    }:
         return _task_or_ties_config(config, method)
     raise ValueError(f"Unsupported merge method: {merge_method}")
 

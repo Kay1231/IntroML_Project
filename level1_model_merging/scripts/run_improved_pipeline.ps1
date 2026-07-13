@@ -54,12 +54,19 @@ $EvalArgs = @(
     "--config", $Config,
     "--include-base",
     "--include-experts",
-    "--include-merges",
     "--limit-math", "$LimitMath",
     "--limit-code", "$LimitCode",
     "--benchmark", "gsm8k",
     "--benchmark", "humaneval"
 )
+if ($Only.Count -eq 0) {
+    $EvalArgs += "--include-merges"
+} else {
+    $MergeOutputDir = Join-Path $ProjectRoot "merged_models_improved"
+    foreach ($Name in $Only) {
+        $EvalArgs += @("--model", "$Name=$(Join-Path $MergeOutputDir $Name)")
+    }
+}
 if (-not $SkipCodeExecution) {
     $EvalArgs += "--allow-code-execution"
 }

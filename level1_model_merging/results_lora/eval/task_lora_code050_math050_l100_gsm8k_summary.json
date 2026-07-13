@@ -1,0 +1,8 @@
+{
+  "model": "task_lora_code050_math050_l100",
+  "benchmark": "gsm8k",
+  "num_examples": 30,
+  "accuracy": 0.5,
+  "correct": 15,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_lora\\eval\\task_lora_code050_math050_l100_gsm8k.jsonl"
+}

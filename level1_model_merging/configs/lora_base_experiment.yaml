@@ -1,0 +1,68 @@
+project_name: qwen25_1p5b_same_base_lora_merge
+
+# Final LoRA line must use the non-instruction base required by the project.
+base_model: Qwen/Qwen2.5-1.5B
+
+expert_models:
+  code: lora_base_experts/oasst_guanaco_qwen25_1p5b_lora
+  math: lora_base_experts/math_qwen25_1p5b_es_lora
+  alt: lora_base_experts/qlora_qwen25_1p5b_alt
+
+lora_adapters:
+  code: kaitchup/Qwen2.5-1.5B-oasst-guanaco-LoRA-adapter
+  math: tanujd/qwen2.5-1.5b-es-lora-math
+  alt: incredible45/qwen-2.5-1.5b-qlora-adapter
+
+merge_dtype: bfloat16
+
+paths:
+  merge_config_dir: generated_merge_configs_lora_base
+  merge_output_dir: merged_models_lora_base
+  results_dir: results_lora_base
+  lora_expert_dir: lora_base_experts
+  hf_cache_dir: ../hf_cache
+
+methods:
+  - name: slerp_lora_base_code050_math050
+    merge_method: slerp
+    description: Same-base LoRA experts materialized then merged with balanced SLERP.
+    parameters:
+      t: 0.50
+
+  - name: task_lora_base_code050_math050_l100
+    merge_method: task_arithmetic
+    description: Same-base LoRA experts merged with Task Arithmetic.
+    weights:
+      code: 0.50
+      math: 0.50
+    parameters:
+      lambda: 1.00
+      normalize: false
+
+  - name: ties_lora_base_code050_math050_d050
+    merge_method: ties
+    description: Same-base LoRA experts merged with TIES.
+    weights:
+      code: 0.50
+      math: 0.50
+    parameters:
+      density: 0.50
+      lambda: 1.00
+      normalize: true
+      int8_mask: true
+
+eval:
+  generation:
+    torch_dtype: auto
+    device_map: auto
+    max_new_tokens_math: 768
+    max_new_tokens_code: 512
+  math:
+    dataset_name: openai/gsm8k
+    dataset_config: main
+    split: test
+    limit: 100
+  code:
+    dataset_name: openai/openai_humaneval
+    split: test
+    limit: 50

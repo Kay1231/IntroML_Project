@@ -1,4 +1,4 @@
-project_name: qwen25_1p5b_code_math_merge_improved
+project_name: qwen25_1p5b_code_math_merge_code_focused
 
 # Use the non-instruction-tuned base as the real reference model.
 # The two experts are instruction/code/math tuned descendants from the Qwen2.5 family.
@@ -16,62 +16,58 @@ paths:
   results_dir: results_improved
   hf_cache_dir: ../hf_cache
 
+# Final sweep after the first improved run:
+# - The first improved run only tested math-heavy or balanced SLERP settings. Since the
+#   code expert is strong on both HumanEval and GSM8K, the remaining SLERP search focuses
+#   on code-heavy settings plus the known math-heavy anchor.
+# - Early balanced Task Arithmetic and TIES variants failed on HumanEval. The current
+#   non-SLERP candidates are intentionally code-heavy and stronger, so they can test
+#   whether a task-vector method can beat the real base model at least on one or both
+#   target benchmarks.
 methods:
+  - name: slerp_code090_math010
+    merge_method: slerp
+    description: Very code-heavy SLERP; intended to keep HumanEval close to the code expert while injecting a small math component.
+    parameters:
+      t: 0.10
+
+  - name: slerp_code080_math020
+    merge_method: slerp
+    description: Code-heavy SLERP; primary candidate for clearer HumanEval retention with nonzero math reuse.
+    parameters:
+      t: 0.20
+
+  - name: slerp_code070_math030
+    merge_method: slerp
+    description: Moderately code-heavy SLERP; probes the transition point before previous balanced merges collapsed.
+    parameters:
+      t: 0.30
+
   - name: slerp_code020_math080
     merge_method: slerp
-    description: SLERP biased toward the math expert while retaining some code behavior.
+    description: Math-heavy SLERP retained as the previous best two-benchmark merged model.
     parameters:
       t: 0.80
 
-  - name: slerp_code035_math065
-    merge_method: slerp
-    description: SLERP midpoint biased toward math for GSM8K retention.
-    parameters:
-      t: 0.65
-
-  - name: slerp_code050_math050
-    merge_method: slerp
-    description: Balanced expert-to-expert SLERP.
-    parameters:
-      t: 0.50
-
-  - name: task_code025_math025_l050
+  - name: task_code080_math020_l100
     merge_method: task_arithmetic
-    description: Conservative task-vector merge against the true base model.
+    description: Code-heavy Task Arithmetic; stronger task vector than the earlier conservative failed variants.
     weights:
-      code: 0.25
-      math: 0.25
+      code: 0.80
+      math: 0.20
     parameters:
-      lambda: 0.50
+      lambda: 1.00
+      normalize: false
 
-  - name: task_code035_math035_l060
-    merge_method: task_arithmetic
-    description: Slightly stronger balanced task-vector merge.
-    weights:
-      code: 0.35
-      math: 0.35
-    parameters:
-      lambda: 0.60
-
-  - name: ties_code025_math025_d020
+  - name: ties_code080_math020_d080
     merge_method: ties
-    description: Sparse low-density TIES merge to reduce cross-task interference.
+    description: Code-heavy high-density TIES; keeps more code signal while still applying sign-consensus filtering.
     weights:
-      code: 0.25
-      math: 0.25
+      code: 0.80
+      math: 0.20
     parameters:
-      density: 0.20
-      normalize: true
-      int8_mask: true
-
-  - name: ties_code035_math035_d030
-    merge_method: ties
-    description: Medium-density TIES merge for a stronger merged candidate.
-    weights:
-      code: 0.35
-      math: 0.35
-    parameters:
-      density: 0.30
+      density: 0.80
+      lambda: 1.00
       normalize: true
       int8_mask: true
 

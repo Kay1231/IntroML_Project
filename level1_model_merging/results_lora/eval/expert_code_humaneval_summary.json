@@ -1,0 +1,11 @@
+{
+  "model": "expert_code",
+  "benchmark": "humaneval",
+  "num_examples": 50,
+  "syntax_rate": 0.96,
+  "syntax_ok": 48,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_lora\\eval\\expert_code_humaneval.jsonl",
+  "allow_code_execution": true,
+  "pass_at_1": 0.46,
+  "passed": 23
+}

@@ -1,4 +1,5 @@
 param(
+    [string]$Config = "",
     [string[]]$Only = @(),
     [switch]$Cpu,
     [switch]$Force
@@ -15,9 +16,13 @@ $env:HF_HOME = Join-Path $ProjectBase "hf_home"
 $env:HF_HUB_CACHE = Join-Path $ProjectBase "hf_cache"
 New-Item -ItemType Directory -Force -Path $env:HF_HOME, $env:HF_HUB_CACHE | Out-Null
 
+if (-not $Config) {
+    $Config = Join-Path $ProjectRoot "configs\improved_experiment.yaml"
+}
+
 $PythonArgs = @(
     "-m", "model_merging_level1.run_merges",
-    "--config", (Join-Path $ProjectRoot "configs\default_experiment.yaml")
+    "--config", $Config
 )
 
 if (-not $Cpu) {

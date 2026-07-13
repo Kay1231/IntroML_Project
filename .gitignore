@@ -1,15 +1,41 @@
+# HuggingFace / dataset cache
 hf_cache/
+hf_datasets_cache/
+hf_home/
+
+# merged / materialized models
 level1_model_merging/merged_models/
 level1_model_merging/merged_models_improved/
+level1_model_merging/merged_models_lora/
+level1_model_merging/merged_models_trained_lora_v2/
+
+# LoRA generated adapters / materialized experts
+level1_model_merging/lora_base_experts/
+level1_model_merging/lora_experts/
+level1_model_merging/trained_lora_adapters/
+level1_model_merging/trained_lora_adapters_v2/
+level1_model_merging/trained_lora_experts/
+level1_model_merging/trained_lora_experts_v2/
+
+# training runs / checkpoints / logs
+level1_model_merging/runs/
 level1_model_merging/run_logs/
 
+# detailed evaluation outputs
 level1_model_merging/results/eval/*.jsonl
 level1_model_merging/results_improved/eval/*.jsonl
+level1_model_merging/results_lora/eval/*.jsonl
+level1_model_merging/results_lora_base/
+level1_model_merging/results_trained_lora/
+level1_model_merging/results_trained_lora_v2/eval/*.jsonl
 
-__pycache__/
-*.pyc
-.cache/
+# model weight files
 *.safetensors
 *.bin
 *.pt
 *.pth
+*.ckpt
+
+# python cache
+__pycache__/
+*.pyc

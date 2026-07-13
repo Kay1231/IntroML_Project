@@ -1,14 +1,10 @@
 models:
 - model: Qwen/Qwen2.5-Coder-1.5B-Instruct
-  parameters:
-    weight: 0.35
 - model: Qwen/Qwen2.5-Math-1.5B-Instruct
-  parameters:
-    weight: 0.35
-merge_method: task_arithmetic
-base_model: Qwen/Qwen2.5-1.5B
+merge_method: slerp
+base_model: Qwen/Qwen2.5-Coder-1.5B-Instruct
 parameters:
-  lambda: 0.6
+  t: 0.2
 dtype: bfloat16
 tokenizer:
   source: union

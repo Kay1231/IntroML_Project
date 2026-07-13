@@ -1,8 +1,10 @@
 param(
+    [string]$Config = "",
     [int]$LimitMath = 100,
     [int]$LimitCode = 50,
     [string[]]$Benchmark = @("gsm8k", "humaneval"),
-    [switch]$AllowCodeExecution
+    [switch]$AllowCodeExecution,
+    [switch]$SkipExisting
 )
 
 $ErrorActionPreference = "Stop"
@@ -17,9 +19,13 @@ $env:HF_HUB_CACHE = Join-Path $ProjectBase "hf_cache"
 $env:HF_DATASETS_CACHE = Join-Path $ProjectBase "hf_datasets_cache"
 New-Item -ItemType Directory -Force -Path $env:HF_HOME, $env:HF_HUB_CACHE, $env:HF_DATASETS_CACHE | Out-Null
 
+if (-not $Config) {
+    $Config = Join-Path $ProjectRoot "configs\improved_experiment.yaml"
+}
+
 $PythonArgs = @(
     "-m", "model_merging_level1.evaluate",
-    "--config", (Join-Path $ProjectRoot "configs\default_experiment.yaml"),
+    "--config", $Config,
     "--include-base",
     "--include-experts",
     "--include-merges",
@@ -33,6 +39,10 @@ foreach ($Item in $Benchmark) {
 
 if ($AllowCodeExecution) {
     $PythonArgs += "--allow-code-execution"
+}
+
+if ($SkipExisting) {
+    $PythonArgs += "--skip-existing"
 }
 
 conda run -n IntroML python @PythonArgs

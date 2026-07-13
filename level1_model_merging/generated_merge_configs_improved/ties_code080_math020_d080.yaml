@@ -1,15 +1,16 @@
 models:
 - model: Qwen/Qwen2.5-Coder-1.5B-Instruct
   parameters:
-    weight: 0.35
-    density: 0.3
+    weight: 0.8
+    density: 0.8
 - model: Qwen/Qwen2.5-Math-1.5B-Instruct
   parameters:
-    weight: 0.35
-    density: 0.3
+    weight: 0.2
+    density: 0.8
 merge_method: ties
 base_model: Qwen/Qwen2.5-1.5B
 parameters:
+  lambda: 1.0
   normalize: true
   int8_mask: true
 dtype: bfloat16

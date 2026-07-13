@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from .config import load_project_config
+from .config import ProjectConfig, adapter_merge_names, load_project_config, method_names
 
 
 def _metric_value(row: dict[str, Any]) -> float:
@@ -26,10 +26,16 @@ def _metric_name(row: dict[str, Any]) -> str:
     return "score"
 
 
-def load_summaries(eval_dir: Path) -> list[dict[str, Any]]:
+def _configured_model_names(config: ProjectConfig) -> set[str]:
+    return {"base", "expert_code", "expert_math", *method_names(config), *adapter_merge_names(config)}
+
+
+def load_summaries(eval_dir: Path, allowed_models: set[str] | None = None) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for path in sorted(eval_dir.glob("*_summary.json")):
         row = json.loads(path.read_text(encoding="utf-8"))
+        if allowed_models is not None and row["model"] not in allowed_models:
+            continue
         row["metric"] = _metric_name(row)
         row["score"] = _metric_value(row)
         rows.append(row)
@@ -150,6 +156,11 @@ def plot_slerp_curve(rows: list[dict[str, Any]], output_dir: Path) -> None:
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Summarize Level 1 evaluation results.")
     parser.add_argument("--config", default="configs/default_experiment.yaml", help="Path to the experiment YAML.")
+    parser.add_argument(
+        "--include-stale",
+        action="store_true",
+        help="Include summaries for models that are no longer listed in the current config.",
+    )
     return parser
 
 
@@ -157,7 +168,8 @@ def main() -> None:
     args = build_arg_parser().parse_args()
     config = load_project_config(args.config)
     config.plots_dir().mkdir(parents=True, exist_ok=True)
-    rows = load_summaries(config.eval_dir())
+    allowed_models = None if args.include_stale else _configured_model_names(config)
+    rows = load_summaries(config.eval_dir(), allowed_models)
     if not rows:
         raise SystemExit(f"No summary files found in {config.eval_dir()}")
 

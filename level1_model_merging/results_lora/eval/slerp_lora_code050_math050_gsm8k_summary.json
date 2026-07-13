@@ -1,0 +1,8 @@
+{
+  "model": "slerp_lora_code050_math050",
+  "benchmark": "gsm8k",
+  "num_examples": 30,
+  "accuracy": 0.5333333333333333,
+  "correct": 16,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_lora\\eval\\slerp_lora_code050_math050_gsm8k.jsonl"
+}

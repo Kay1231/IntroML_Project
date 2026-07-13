@@ -19,6 +19,7 @@ class ProjectConfig:
     results_dir: Path
     hf_cache_dir: str | None
     methods: list[dict[str, Any]]
+    adapter_merges: list[dict[str, Any]]
     eval: dict[str, Any]
 
     def merged_model_dir(self, method_name: str) -> Path:
@@ -60,12 +61,17 @@ def load_project_config(config_path: str | Path) -> ProjectConfig:
         results_dir=_resolve_path(project_root, paths.get("results_dir"), "results"),
         hf_cache_dir=resolved_hf_cache_dir,
         methods=list(raw["methods"]),
+        adapter_merges=list(raw.get("adapter_merges", [])),
         eval=dict(raw.get("eval", {})),
     )
 
 
 def method_names(config: ProjectConfig) -> list[str]:
     return [str(method["name"]) for method in config.methods]
+
+
+def adapter_merge_names(config: ProjectConfig) -> list[str]:
+    return [str(method["name"]) for method in config.adapter_merges]
 
 
 def select_methods(config: ProjectConfig, only: list[str] | None = None) -> list[dict[str, Any]]:

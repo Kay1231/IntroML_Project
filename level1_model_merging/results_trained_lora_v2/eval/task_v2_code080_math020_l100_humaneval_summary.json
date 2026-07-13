@@ -1,0 +1,11 @@
+{
+  "model": "task_v2_code080_math020_l100",
+  "benchmark": "humaneval",
+  "num_examples": 50,
+  "syntax_rate": 0.44,
+  "syntax_ok": 22,
+  "details_path": "D:\\IntroML\\project\\level1_model_merging\\results_trained_lora_v2\\eval\\task_v2_code080_math020_l100_humaneval.jsonl",
+  "allow_code_execution": true,
+  "pass_at_1": 0.28,
+  "passed": 14
+}
