@@ -1,0 +1,5 @@
+model,benchmark,metric,score,num_examples,details_path
+knots_ta_code020_math080,gsm8k,accuracy,0.620000,100,D:\IntroML\project\level2_knots\results\eval\knots_ta_code020_math080_gsm8k.jsonl
+knots_ta_code020_math080,humaneval,pass_at_1,0.400000,50,D:\IntroML\project\level2_knots\results\eval\knots_ta_code020_math080_humaneval.jsonl
+knots_ties_code020_math080_d080,gsm8k,accuracy,0.610000,100,D:\IntroML\project\level2_knots\results\eval\knots_ties_code020_math080_d080_gsm8k.jsonl
+knots_ties_code020_math080_d080,humaneval,pass_at_1,0.440000,50,D:\IntroML\project\level2_knots\results\eval\knots_ties_code020_math080_d080_humaneval.jsonl

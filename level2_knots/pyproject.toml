@@ -1,0 +1,9 @@
+[project]
+name = "level2-knots"
+version = "0.1.0"
+description = "Level 2 KnOTS reproduction for model merging coursework."
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

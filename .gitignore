@@ -39,3 +39,13 @@ level1_model_merging/results_trained_lora_v2/eval/*.jsonl
 # python cache
 __pycache__/
 *.pyc
+
+# Level 2 generated model outputs
+level2_knots/merged_models/
+
+# Level 2 detailed eval outputs
+level2_knots/results/eval/*.jsonl
+
+# Level 2 logs / runs if generated later
+level2_knots/runs/
+level2_knots/run_logs/

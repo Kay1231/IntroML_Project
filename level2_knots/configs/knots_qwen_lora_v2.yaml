@@ -1,0 +1,54 @@
+project_name: qwen25_1p5b_knots_lora_v2_reproduction
+
+base_model: Qwen/Qwen2.5-1.5B
+
+expert_models:
+  code: D:\IntroML\project\level1_model_merging\trained_lora_experts_v2\code_qwen25_1p5b_mbpp_body_lr5e5
+  math: D:\IntroML\project\level1_model_merging\trained_lora_experts_v2\math_qwen25_1p5b_gsm8k_evalprompt_lr5e5
+
+lora_adapters:
+  code: ..\level1_model_merging\trained_lora_adapters_v2\code_qwen25_1p5b_mbpp_body_lr5e5
+  math: ..\level1_model_merging\trained_lora_adapters_v2\math_qwen25_1p5b_gsm8k_evalprompt_lr5e5
+
+merge_dtype: bfloat16
+
+paths:
+  merge_config_dir: generated_merge_configs
+  merge_output_dir: merged_models
+  results_dir: results
+  hf_cache_dir: ..\hf_cache
+
+methods:
+  - name: knots_ties_code020_math080_d080
+    merge_method: knots_ties
+    description: KnOTS SVD-aligned TIES merge; math-heavy ratio selected from Level 1 v2 best trade-off.
+    weights:
+      code: 0.20
+      math: 0.80
+    parameters:
+      density: 0.80
+
+  - name: knots_ta_code020_math080
+    merge_method: knots_task_arithmetic
+    description: KnOTS SVD-aligned task arithmetic with the same math-heavy ratio.
+    weights:
+      code: 0.20
+      math: 0.80
+    parameters:
+      density: 1.00
+
+eval:
+  generation:
+    torch_dtype: auto
+    device_map: auto
+    max_new_tokens_math: 768
+    max_new_tokens_code: 512
+  math:
+    dataset_name: openai/gsm8k
+    dataset_config: main
+    split: test
+    limit: 100
+  code:
+    dataset_name: openai/openai_humaneval
+    split: test
+    limit: 50

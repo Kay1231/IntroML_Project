@@ -1,0 +1,11 @@
+{
+  "model": "knots_ties_code020_math080_d080",
+  "benchmark": "humaneval",
+  "num_examples": 50,
+  "syntax_rate": 0.56,
+  "syntax_ok": 28,
+  "details_path": "D:\\IntroML\\project\\level2_knots\\results\\eval\\knots_ties_code020_math080_d080_humaneval.jsonl",
+  "allow_code_execution": true,
+  "pass_at_1": 0.44,
+  "passed": 22
+}

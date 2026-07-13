@@ -1,0 +1,8 @@
+{
+  "model": "knots_ties_code020_math080_d080",
+  "benchmark": "gsm8k",
+  "num_examples": 100,
+  "accuracy": 0.61,
+  "correct": 61,
+  "details_path": "D:\\IntroML\\project\\level2_knots\\results\\eval\\knots_ties_code020_math080_d080_gsm8k.jsonl"
+}
